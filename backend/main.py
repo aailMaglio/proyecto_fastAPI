@@ -4,18 +4,18 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
 
-class Lista(BaseModel):
+class Ingrediente(BaseModel):
     nombre: str
 
-class Listas(BaseModel):
-    listas: List[Lista]
+class Ingredientes(BaseModel):
+    ingredientes: Ingrediente[Ingrediente]
 
 
 
 app = FastAPI()
 
 origins = [
-    "http://localhost:3000",
+    "http://localhost:5000", "http://localhost:5173/", "http://localhost:3000",
 ]
 
 #cross-origin resource sharing (CORS)
@@ -27,18 +27,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-memoria_db = {"listas": []}
+memoria_db = {"ingredientes": []}
 
 
-@app.get("/listas", response_model=Listas)
-def get_listas():
-    return Listas(listas=memoria_db["listas"])  
+@app.get("/ingredientes", response_model=Ingredientes)
+def get_ingredientes():
+    return Ingredientes(listas=memoria_db["ingredientes"])  
 
 
-@app.post("/listas", response_model=Lista)
-def add_lista(lista: Lista):
-    memoria_db["listas"].append(lista)
-    return lista
+@app.post("/ingredientes", response_model=Ingrediente)
+def add_ingrediente(ingrediente: List):
+    memoria_db["ingredientes"].append(ingrediente)
+    return ingrediente
 
 
 if __name__ == "__main__":

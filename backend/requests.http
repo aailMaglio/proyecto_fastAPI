@@ -5,5 +5,5 @@ POST http://localhost:5000/listas
 Content-Type: application/jsons
 
 {
-    "nombre": "Lista clientes"
+    "nombre": "Lista ingredientes"
 }
