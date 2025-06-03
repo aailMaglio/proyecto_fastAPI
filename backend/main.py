@@ -8,14 +8,14 @@ class Ingrediente(BaseModel):
     nombre: str
 
 class Ingredientes(BaseModel):
-    ingredientes: Ingrediente[Ingrediente]
+    ingredientes: List[Ingrediente]
 
 
 
 app = FastAPI()
 
 origins = [
-    "http://localhost:5000", "http://localhost:5173/", "http://localhost:3000",
+    "http://localhost:5000", "http://localhost:5173", "http://localhost:3000",
 ]
 
 #cross-origin resource sharing (CORS)
@@ -32,11 +32,11 @@ memoria_db = {"ingredientes": []}
 
 @app.get("/ingredientes", response_model=Ingredientes)
 def get_ingredientes():
-    return Ingredientes(listas=memoria_db["ingredientes"])  
+    return Ingredientes(Ingredientes=memoria_db["ingredientes"])  
 
 
 @app.post("/ingredientes", response_model=Ingrediente)
-def add_ingrediente(ingrediente: List):
+def add_ingrediente(ingrediente: Ingrediente):
     memoria_db["ingredientes"].append(ingrediente)
     return ingrediente
 

@@ -1,8 +1,8 @@
-GET http://localhost:5000/listas
+GET http://localhost:5000/ingredientes
 
 
-POST http://localhost:5000/listas
-Content-Type: application/jsons
+POST http://localhost:5000/ingredientes
+Content-Type: application/json
 
 {
     "nombre": "Lista ingredientes"
