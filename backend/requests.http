@@ -1,0 +1,9 @@
+GET http://localhost:5000/listas
+
+
+POST http://localhost:5000/listas
+Content-Type: application/jsons
+
+{
+    "nombre": "Lista clientes"
+}
