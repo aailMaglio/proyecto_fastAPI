@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import api from "../api.js";
 import AddIngredienteForm from './AddIngredienteForm.jsx';
+import DeleteIngredienteForm from './DeleteIngredienteForm.jsx';
 
 const ListaIngredientes = () => {
   const [ingredientes, setIngredientes] = useState([]);
@@ -23,6 +24,15 @@ const ListaIngredientes = () => {
     }
   };
 
+  const deleteIngrediente = async (nombreIngrediente) => {
+    try {
+      await api.delete(`/ingredientes/${nombreIngrediente}`);
+      fetchingredientes();  
+    } catch (error) {
+      console.error("Error al eliminar el ingrediente", error);
+    }
+  }
+
   useEffect(() => {
     fetchingredientes();
   }, []);
@@ -36,6 +46,7 @@ const ListaIngredientes = () => {
         ))}
       </ul>
       <AddIngredienteForm addIngrediente={addIngrediente} />
+      <DeleteIngredienteForm deleteIngrediente={deleteIngrediente} />
     </div>
   );
 };
