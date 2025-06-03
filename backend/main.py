@@ -8,14 +8,14 @@ class Ingrediente(BaseModel):
     nombre: str
 
 class Ingredientes(BaseModel):
-    ingredientes: Ingrediente[Ingrediente]
+    ingredientes: List[Ingrediente]
 
 
 
 app = FastAPI()
 
 origins = [
-    "http://localhost:5000", "http://localhost:5173/", "http://localhost:3000",
+    "http://localhost:1000", "http://localhost:5173"
 ]
 
 #cross-origin resource sharing (CORS)
@@ -32,14 +32,22 @@ memoria_db = {"ingredientes": []}
 
 @app.get("/ingredientes", response_model=Ingredientes)
 def get_ingredientes():
-    return Ingredientes(listas=memoria_db["ingredientes"])  
+    return Ingredientes(ingredientes=memoria_db["ingredientes"])  
 
 
 @app.post("/ingredientes", response_model=Ingrediente)
-def add_ingrediente(ingrediente: List):
+def add_ingrediente(ingrediente: Ingrediente):
     memoria_db["ingredientes"].append(ingrediente)
     return ingrediente
 
+@app.delete("/ingredientes/{nombre}", response_model=Ingrediente)
+def delete_ingrediente(nombre: str):
+    for i, ingrediente in enumerate(memoria_db["ingredientes"]):
+        if ingrediente.nombre == nombre:
+            del memoria_db["ingredientes"][i]
+            return ingrediente
+    return {"error": "Ingrediente no encontrado"}
+    
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=5000)
+    uvicorn.run(app, host="0.0.0.0", port=1000)
