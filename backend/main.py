@@ -40,6 +40,14 @@ def add_ingrediente(ingrediente: Ingrediente):
     memoria_db["ingredientes"].append(ingrediente)
     return ingrediente
 
+@app.delete("/ingredientes/{nombre}", response_model=Ingrediente)
+def delete_ingrediente(nombre: str):
+    for i, ingrediente in enumerate(memoria_db["ingredientes"]):
+        if ingrediente.nombre == nombre:
+            del memoria_db["ingredientes"][i]
+            return ingrediente
+    return {"error": "Ingrediente no encontrado"}
+    
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=1000)
