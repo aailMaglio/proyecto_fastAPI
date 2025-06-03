@@ -47,7 +47,6 @@ def delete_ingrediente(nombre: str):
             del memoria_db["ingredientes"][i]
             return ingrediente
     return {"error": "Ingrediente no encontrado"}
-    
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=1000)
