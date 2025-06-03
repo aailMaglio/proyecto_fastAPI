@@ -15,7 +15,7 @@ class Ingredientes(BaseModel):
 app = FastAPI()
 
 origins = [
-    "http://localhost:5000", "http://localhost:5173", "http://localhost:3000",
+    "http://localhost:1000", "http://localhost:5173"
 ]
 
 #cross-origin resource sharing (CORS)
@@ -32,7 +32,7 @@ memoria_db = {"ingredientes": []}
 
 @app.get("/ingredientes", response_model=Ingredientes)
 def get_ingredientes():
-    return Ingredientes(Ingredientes=memoria_db["ingredientes"])  
+    return Ingredientes(ingredientes=memoria_db["ingredientes"])  
 
 
 @app.post("/ingredientes", response_model=Ingrediente)
@@ -42,4 +42,4 @@ def add_ingrediente(ingrediente: Ingrediente):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=5000)
+    uvicorn.run(app, host="0.0.0.0", port=1000)

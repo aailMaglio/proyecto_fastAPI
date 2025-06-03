@@ -1,7 +1,7 @@
-GET http://localhost:5000/ingredientes
+GET http://localhost:1000/ingredientes
 
 
-POST http://localhost:5000/ingredientes
+POST http://localhost:1000/ingredientes
 Content-Type: application/json
 
 {
