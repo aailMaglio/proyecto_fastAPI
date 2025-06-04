@@ -33,7 +33,7 @@ const ListaIngredientes = () => {
       console.error("Error al eliminar el ingrediente", error);
     }
   }
-  
+
   const updateIngrediente = async (idIngrediente, nuevoNombre) => {
     try {
       await api.put(`/ingredientes/${idIngrediente}`, { nombre: nuevoNombre });
@@ -51,8 +51,8 @@ const ListaIngredientes = () => {
     <div>
       <h2>Lista ingredientes</h2>
       <ul>
-        {ingredientes.map((ingrediente, index) => (
-          <li key={index}>{ingrediente.nombre}</li>
+        {ingredientes.map((ingrediente) => (
+          <li key={ingrediente.id}>{ingrediente.nombre}</li>
         ))}
       </ul>
       <AddIngredienteForm addIngrediente={addIngrediente} />
