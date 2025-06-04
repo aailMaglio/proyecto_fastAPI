@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import api from "../api.js";
 import AddIngredienteForm from './AddIngredienteForm.jsx';
 import DeleteIngredienteForm from './DeleteIngredienteForm.jsx';
+import UpdateIngredienteForm from './UpdateIngredienteForm.jsx';
 
 const ListaIngredientes = () => {
   const [ingredientes, setIngredientes] = useState([]);
@@ -24,14 +25,23 @@ const ListaIngredientes = () => {
     }
   };
 
-  const deleteIngrediente = async (nombreIngrediente) => {
+  const deleteIngrediente = async (idIngrediente) => {
     try {
-      await api.delete(`/ingredientes/${nombreIngrediente}`);
-      fetchingredientes();  
+      await api.delete(`/ingredientes/${idIngrediente}`);
+      fetchingredientes();  // Refrescar la lista después de eliminar
     } catch (error) {
       console.error("Error al eliminar el ingrediente", error);
     }
   }
+  
+  const updateIngrediente = async (idIngrediente, nuevoNombre) => {
+    try {
+      await api.put(`/ingredientes/${idIngrediente}`, { nombre: nuevoNombre });
+      fetchingredientes();  // Refrescar la lista después de actualizar
+    } catch (error) {
+      console.error("Error al actualizar el ingrediente", error);
+    }
+  };
 
   useEffect(() => {
     fetchingredientes();
@@ -47,6 +57,7 @@ const ListaIngredientes = () => {
       </ul>
       <AddIngredienteForm addIngrediente={addIngrediente} />
       <DeleteIngredienteForm deleteIngrediente={deleteIngrediente} />
+      <UpdateIngredienteForm updateIngrediente={updateIngrediente} />
     </div>
   );
 };

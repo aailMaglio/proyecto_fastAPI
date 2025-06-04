@@ -5,6 +5,7 @@ from pydantic import BaseModel
 from typing import List
 
 class Ingrediente(BaseModel):
+    id: int = None
     nombre: str
 
 class Ingredientes(BaseModel):
@@ -37,14 +38,23 @@ def get_ingredientes():
 
 @app.post("/ingredientes", response_model=Ingrediente)
 def add_ingrediente(ingrediente: Ingrediente):
+    if ingrediente.id is None:
+        ingrediente.id = len(memoria_db["ingredientes"]) + 1
     memoria_db["ingredientes"].append(ingrediente)
     return ingrediente
 
-@app.delete("/ingredientes/{nombre}", response_model=Ingrediente)
-def delete_ingrediente(nombre: str):
+@app.delete("/ingredientes/{id}", response_model=Ingrediente)
+def delete_ingrediente(id: int):
     for i, ingrediente in enumerate(memoria_db["ingredientes"]):
-        if ingrediente.nombre == nombre:
-            del memoria_db["ingredientes"][i]
+        if ingrediente.id == id:
+            return memoria_db["ingredientes"].pop(i)
+    return {"error": "Ingrediente no encontrado"}
+
+@app.put("/ingredientes/{id}", response_model=Ingrediente)
+def update_ingrediente(id: int, ingrediente: Ingrediente):
+    for i, ing in enumerate(memoria_db["ingredientes"]):
+        if ing.id == id:
+            memoria_db["ingredientes"][i] = ingrediente
             return ingrediente
     return {"error": "Ingrediente no encontrado"}
 

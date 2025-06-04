@@ -1,27 +1,27 @@
 import React, { useState } from 'react';
 
 const DeleteIngredienteForm = ({ deleteIngrediente }) => {
-    const [nombreIngrediente, setingredienteNombre] = useState('');
-    
+    const [ingredienteId, setIngredienteId] = useState('');
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (nombreIngrediente) {
-        deleteIngrediente(nombreIngrediente);
-        setingredienteNombre('');
+        if (ingredienteId) {
+            deleteIngrediente(Number(ingredienteId));
+            setIngredienteId('');
         }
     };
-    
+
     return (
         <form onSubmit={handleSubmit}>
-        <input
-            type="text"
-            value={nombreIngrediente}
-            onChange={(e) => setingredienteNombre(e.target.value)}
-            placeholder="Escribe el Ingrediente a eliminar"
-        />
-        <button type="submit">Eliminar Ingrediente</button>
+            <input
+                type="number"
+                value={ingredienteId}
+                onChange={(e) => setIngredienteId(e.target.value)}
+                placeholder="ID del ingrediente a eliminar"
+            />
+            <button type="submit">Eliminar Ingrediente</button>
         </form>
     );
-}
+};
 
 export default DeleteIngredienteForm;
