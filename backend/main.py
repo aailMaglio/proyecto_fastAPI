@@ -22,7 +22,7 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -40,7 +40,7 @@ def get_db():
 @app.get("/ingredientes", response_model=Ingredientes)
 def get_ingredientes(db: Session = Depends(get_db)):
     ingredientes = db.query(IngredienteDB).all()
-    return Ingredientes(ingredientes=ingredientes)
+    return Ingredientes(ingredientes)
 
 @app.post("/ingredientes", response_model=Ingrediente)
 def add_ingrediente(ingrediente: Ingrediente, db: Session = Depends(get_db)):
